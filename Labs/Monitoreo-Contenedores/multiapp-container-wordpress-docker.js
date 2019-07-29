@@ -2,20 +2,19 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "servers_    netunivsqldb1111_createMode": {
-            "defaultValue": null,
+        "servers_netunivsqldbdemo_createMode": {
             "type": "SecureString"
         },
-        "sites_netunivdocker111_name": {
-            "defaultValue": "netunivdocker111",
+        "sites_netunivdockerdemo_name": {
+            "defaultValue": "netunivdockerdemo",
             "type": "String"
         },
-        "serverfarms_wpdocker_name": {
-            "defaultValue": "wpdocker",
+        "serverfarms_wpdockerdemo_name": {
+            "defaultValue": "wpdockerdemo",
             "type": "String"
         },
-        "servers_    netunivsqldb1111_name": {
-            "defaultValue": "    netunivsqldb1111",
+        "servers_netunivsqldbdemo_name": {
+            "defaultValue": "netunivsqldb2",
             "type": "String"
         }
     },
@@ -23,8 +22,8 @@
     "resources": [
         {
             "type": "Microsoft.DBforMySQL/servers",
-            "apiVersion": "2017-12-01-preview",
-            "name": "[parameters('servers_    netunivsqldb1111_name')]",
+            "apiVersion": "2017-12-01",
+            "name": "[parameters('servers_netunivsqldbdemo_name')]",
             "location": "eastus",
             "sku": {
                 "name": "GP_Gen5_2",
@@ -39,14 +38,13 @@
                     "geoRedundantBackup": "Disabled"
                 },
                 "version": "5.7",
-                "sslEnforcement": "Enabled",
-                "createMode": "[parameters('servers_    netunivsqldb1111_createMode')]"
+                "sslEnforcement": "Enabled"
             }
         },
         {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2016-09-01",
-            "name": "[parameters('serverfarms_wpdocker_name')]",
+            "name": "[parameters('serverfarms_wpdockerdemo_name')]",
             "location": "East US",
             "sku": {
                 "name": "S1",
@@ -57,7 +55,7 @@
             },
             "kind": "linux",
             "properties": {
-                "name": "[parameters('serverfarms_wpdocker_name')]",
+                "name": "[parameters('serverfarms_wpdockerdemo_name')]",
                 "perSiteScaling": false,
                 "reserved": true,
                 "targetWorkerCount": 0,
@@ -67,9 +65,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/audit_log_enabled')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/audit_log_enabled')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -79,9 +77,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/audit_log_events')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/audit_log_events')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "CONNECTION",
@@ -91,9 +89,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/audit_log_exclude_users')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/audit_log_exclude_users')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "azure_superuser",
@@ -103,9 +101,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/binlog_group_commit_sync_delay')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/binlog_group_commit_sync_delay')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1000",
@@ -115,9 +113,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/binlog_group_commit_sync_no_delay_count')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/binlog_group_commit_sync_no_delay_count')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "0",
@@ -127,9 +125,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/character_set_server')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/character_set_server')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "latin1",
@@ -139,9 +137,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/default_week_format')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/default_week_format')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "0",
@@ -151,9 +149,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/div_precision_increment')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/div_precision_increment')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "4",
@@ -163,9 +161,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/eq_range_index_dive_limit')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/eq_range_index_dive_limit')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "200",
@@ -175,9 +173,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/event_scheduler')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/event_scheduler')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -187,9 +185,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/flush_time')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/flush_time')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "0",
@@ -199,9 +197,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/ft_query_expansion_limit')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/ft_query_expansion_limit')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "20",
@@ -211,9 +209,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/group_concat_max_len')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/group_concat_max_len')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1024",
@@ -223,9 +221,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/init_connect')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/init_connect')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "source": "system-default"
@@ -234,9 +232,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_adaptive_flushing')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_adaptive_flushing')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "ON",
@@ -246,9 +244,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_adaptive_flushing_lwm')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_adaptive_flushing_lwm')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "10",
@@ -258,9 +256,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_adaptive_hash_index')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_adaptive_hash_index')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "ON",
@@ -270,9 +268,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_adaptive_hash_index_parts')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_adaptive_hash_index_parts')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "8",
@@ -282,9 +280,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_adaptive_max_sleep_delay')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_adaptive_max_sleep_delay')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "150000",
@@ -294,9 +292,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_autoextend_increment')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_autoextend_increment')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "64",
@@ -306,9 +304,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_autoinc_lock_mode')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_autoinc_lock_mode')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1",
@@ -318,9 +316,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_buffer_pool_dump_pct')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_buffer_pool_dump_pct')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "25",
@@ -330,9 +328,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_buffer_pool_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_buffer_pool_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "3758096384",
@@ -342,9 +340,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_change_buffer_max_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_change_buffer_max_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "25",
@@ -354,9 +352,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_change_buffering')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_change_buffering')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "all",
@@ -366,9 +364,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_cmp_per_index_enabled')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_cmp_per_index_enabled')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -378,9 +376,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_commit_concurrency')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_commit_concurrency')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "0",
@@ -390,9 +388,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_compression_failure_threshold_pct')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_compression_failure_threshold_pct')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "5",
@@ -402,9 +400,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_compression_level')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_compression_level')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "6",
@@ -414,9 +412,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_compression_pad_pct_max')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_compression_pad_pct_max')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "50",
@@ -426,9 +424,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_concurrency_tickets')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_concurrency_tickets')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "5000",
@@ -438,9 +436,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_deadlock_detect')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_deadlock_detect')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "ON",
@@ -450,9 +448,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_default_row_format')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_default_row_format')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "DYNAMIC",
@@ -462,9 +460,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_file_format')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_file_format')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "Barracuda",
@@ -474,9 +472,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_file_per_table')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_file_per_table')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -486,9 +484,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_fill_factor')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_fill_factor')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "100",
@@ -498,9 +496,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_ft_cache_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_ft_cache_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "8000000",
@@ -510,9 +508,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_ft_enable_stopword')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_ft_enable_stopword')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "ON",
@@ -522,9 +520,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_ft_max_token_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_ft_max_token_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "84",
@@ -534,9 +532,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_ft_min_token_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_ft_min_token_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "3",
@@ -546,9 +544,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_ft_num_word_optimize')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_ft_num_word_optimize')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "2000",
@@ -558,9 +556,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_ft_result_cache_limit')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_ft_result_cache_limit')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "2000000000",
@@ -570,9 +568,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_ft_sort_pll_degree')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_ft_sort_pll_degree')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "2",
@@ -582,9 +580,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_ft_total_cache_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_ft_total_cache_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "640000000",
@@ -594,9 +592,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_io_capacity')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_io_capacity')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "200",
@@ -606,9 +604,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_io_capacity_max')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_io_capacity_max')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "2000",
@@ -618,9 +616,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_large_prefix')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_large_prefix')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "ON",
@@ -630,9 +628,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_lock_wait_timeout')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_lock_wait_timeout')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "50",
@@ -642,9 +640,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_log_compressed_pages')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_log_compressed_pages')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "ON",
@@ -654,9 +652,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_lru_scan_depth')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_lru_scan_depth')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1024",
@@ -666,9 +664,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_max_dirty_pages_pct')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_max_dirty_pages_pct')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "75",
@@ -678,9 +676,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_max_dirty_pages_pct_lwm')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_max_dirty_pages_pct_lwm')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "0",
@@ -690,9 +688,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_max_purge_lag')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_max_purge_lag')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "0",
@@ -702,9 +700,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_max_purge_lag_delay')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_max_purge_lag_delay')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "0",
@@ -714,9 +712,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_old_blocks_pct')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_old_blocks_pct')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "37",
@@ -726,9 +724,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_old_blocks_time')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_old_blocks_time')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1000",
@@ -738,9 +736,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_optimize_fulltext_only')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_optimize_fulltext_only')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -750,9 +748,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_page_cleaners')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_page_cleaners')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "4",
@@ -762,9 +760,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_purge_batch_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_purge_batch_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "300",
@@ -774,9 +772,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_purge_rseg_truncate_frequency')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_purge_rseg_truncate_frequency')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "128",
@@ -786,9 +784,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_purge_threads')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_purge_threads')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "4",
@@ -798,9 +796,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_random_read_ahead')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_random_read_ahead')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -810,9 +808,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_read_ahead_threshold')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_read_ahead_threshold')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "56",
@@ -822,9 +820,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_read_io_threads')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_read_io_threads')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "4",
@@ -834,9 +832,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_rollback_segments')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_rollback_segments')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "128",
@@ -846,9 +844,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_stats_auto_recalc')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_stats_auto_recalc')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "ON",
@@ -858,9 +856,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_stats_include_delete_marked')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_stats_include_delete_marked')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -870,9 +868,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_stats_method')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_stats_method')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "nulls_equal",
@@ -882,9 +880,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_stats_on_metadata')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_stats_on_metadata')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -894,9 +892,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_stats_persistent')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_stats_persistent')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "ON",
@@ -906,9 +904,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_stats_persistent_sample_pages')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_stats_persistent_sample_pages')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "20",
@@ -918,9 +916,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_stats_transient_sample_pages')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_stats_transient_sample_pages')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "8",
@@ -930,9 +928,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_sync_array_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_sync_array_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1",
@@ -942,9 +940,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_table_locks')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_table_locks')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "ON",
@@ -954,9 +952,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_thread_concurrency')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_thread_concurrency')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "0",
@@ -966,9 +964,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_thread_sleep_delay')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_thread_sleep_delay')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "10000",
@@ -978,9 +976,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/innodb_write_io_threads')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/innodb_write_io_threads')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "4",
@@ -990,9 +988,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/interactive_timeout')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/interactive_timeout')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "28800",
@@ -1002,9 +1000,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/join_buffer_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/join_buffer_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "262144",
@@ -1014,9 +1012,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/lock_wait_timeout')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/lock_wait_timeout')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "31536000",
@@ -1026,9 +1024,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/log_bin_trust_function_creators')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/log_bin_trust_function_creators')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -1038,9 +1036,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/log_queries_not_using_indexes')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/log_queries_not_using_indexes')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -1050,9 +1048,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/log_slow_admin_statements')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/log_slow_admin_statements')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -1062,9 +1060,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/log_slow_slave_statements')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/log_slow_slave_statements')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -1074,9 +1072,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/log_throttle_queries_not_using_indexes')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/log_throttle_queries_not_using_indexes')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "0",
@@ -1086,9 +1084,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/long_query_time')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/long_query_time')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "10",
@@ -1098,9 +1096,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/lower_case_table_names')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/lower_case_table_names')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1",
@@ -1110,9 +1108,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_allowed_packet')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_allowed_packet')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "536870912",
@@ -1122,9 +1120,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_connect_errors')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_connect_errors')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "100",
@@ -1134,9 +1132,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_connections')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_connections')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "300",
@@ -1146,9 +1144,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_digest_length')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_digest_length')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1024",
@@ -1158,9 +1156,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_error_count')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_error_count')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "64",
@@ -1170,9 +1168,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_execution_time')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_execution_time')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "0",
@@ -1182,9 +1180,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_heap_table_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_heap_table_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "16777216",
@@ -1194,9 +1192,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_join_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_join_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "18446744073709551615",
@@ -1206,9 +1204,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_length_for_sort_data')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_length_for_sort_data')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1024",
@@ -1218,9 +1216,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_points_in_geometry')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_points_in_geometry')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "65536",
@@ -1230,9 +1228,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_prepared_stmt_count')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_prepared_stmt_count')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "16382",
@@ -1242,9 +1240,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_seeks_for_key')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_seeks_for_key')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "4294967295",
@@ -1254,9 +1252,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_sort_length')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_sort_length')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1024",
@@ -1266,9 +1264,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_sp_recursion_depth')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_sp_recursion_depth')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "0",
@@ -1278,9 +1276,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_user_connections')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_user_connections')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "0",
@@ -1290,9 +1288,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/max_write_lock_count')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/max_write_lock_count')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "4294967295",
@@ -1302,9 +1300,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/min_examined_row_limit')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/min_examined_row_limit')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "0",
@@ -1314,9 +1312,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/net_buffer_length')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/net_buffer_length')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "16384",
@@ -1326,9 +1324,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/net_read_timeout')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/net_read_timeout')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "120",
@@ -1338,9 +1336,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/net_retry_count')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/net_retry_count')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "10",
@@ -1350,9 +1348,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/net_write_timeout')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/net_write_timeout')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "240",
@@ -1362,9 +1360,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/ngram_token_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/ngram_token_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "2",
@@ -1374,9 +1372,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/optimizer_prune_level')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/optimizer_prune_level')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1",
@@ -1386,9 +1384,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/optimizer_search_depth')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/optimizer_search_depth')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "62",
@@ -1398,9 +1396,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/parser_max_mem_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/parser_max_mem_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "18446744073709551615",
@@ -1410,9 +1408,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/performance_schema')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/performance_schema')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "ON",
@@ -1422,9 +1420,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/preload_buffer_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/preload_buffer_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "32768",
@@ -1434,9 +1432,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/query_cache_limit')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/query_cache_limit')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1048576",
@@ -1446,9 +1444,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/query_cache_min_res_unit')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/query_cache_min_res_unit')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "4096",
@@ -1458,9 +1456,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/query_cache_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/query_cache_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "0",
@@ -1470,9 +1468,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/query_cache_type')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/query_cache_type')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -1482,9 +1480,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/query_prealloc_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/query_prealloc_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "8192",
@@ -1494,9 +1492,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/query_store_capture_interval')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/query_store_capture_interval')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "15",
@@ -1506,9 +1504,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/query_store_capture_mode')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/query_store_capture_mode')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "NONE",
@@ -1518,9 +1516,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/query_store_capture_utility_queries')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/query_store_capture_utility_queries')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "NO",
@@ -1530,9 +1528,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/query_store_retention_period_in_days')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/query_store_retention_period_in_days')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "7",
@@ -1542,9 +1540,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/query_store_wait_sampling_capture_mode')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/query_store_wait_sampling_capture_mode')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "NONE",
@@ -1554,9 +1552,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/query_store_wait_sampling_frequency')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/query_store_wait_sampling_frequency')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "30",
@@ -1566,9 +1564,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/range_alloc_block_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/range_alloc_block_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "4096",
@@ -1578,9 +1576,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/range_optimizer_max_mem_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/range_optimizer_max_mem_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "8388608",
@@ -1590,9 +1588,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/relay_log_space_limit')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/relay_log_space_limit')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1073741824",
@@ -1602,9 +1600,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/server_id')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/server_id')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1139021442",
@@ -1614,9 +1612,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/session_track_schema')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/session_track_schema')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "ON",
@@ -1626,9 +1624,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/session_track_state_change')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/session_track_state_change')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -1638,9 +1636,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/show_compatibility_56')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/show_compatibility_56')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -1650,9 +1648,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/skip_show_database')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/skip_show_database')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -1662,9 +1660,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/slave_net_timeout')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/slave_net_timeout')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "60",
@@ -1674,9 +1672,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/slave_parallel_workers')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/slave_parallel_workers')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "64",
@@ -1686,9 +1684,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/slow_query_log')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/slow_query_log')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "OFF",
@@ -1698,9 +1696,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/sort_buffer_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/sort_buffer_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "524288",
@@ -1710,9 +1708,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/sql_mode')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/sql_mode')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "source": "system-default"
@@ -1721,9 +1719,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/stored_program_cache')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/stored_program_cache')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "256",
@@ -1733,9 +1731,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/table_open_cache')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/table_open_cache')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "2000",
@@ -1745,9 +1743,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/table_open_cache_instances')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/table_open_cache_instances')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "1",
@@ -1757,9 +1755,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/time_zone')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/time_zone')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "SYSTEM",
@@ -1769,9 +1767,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/tmp_table_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/tmp_table_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "16777216",
@@ -1781,9 +1779,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/transaction_alloc_block_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/transaction_alloc_block_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "8192",
@@ -1793,9 +1791,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/transaction_prealloc_size')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/transaction_prealloc_size')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "4096",
@@ -1805,9 +1803,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/tx_isolation')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/tx_isolation')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "REPEATABLE-READ",
@@ -1817,9 +1815,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/updatable_views_with_limit')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/updatable_views_with_limit')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "YES",
@@ -1829,9 +1827,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/configurations",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/wait_timeout')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/wait_timeout')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "value": "120",
@@ -1841,9 +1839,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/databases",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/information_schema')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/information_schema')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "charset": "utf8",
@@ -1853,9 +1851,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/databases",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/mysql')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/mysql')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "charset": "latin1",
@@ -1865,9 +1863,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/databases",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/performance_schema')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/performance_schema')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "charset": "utf8",
@@ -1877,9 +1875,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/databases",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/sys')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/sys')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "charset": "utf8",
@@ -1889,9 +1887,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/databases",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/wordpress')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/wordpress')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "charset": "latin1",
@@ -1901,9 +1899,9 @@
         {
             "type": "Microsoft.DBforMySQL/servers/firewallRules",
             "apiVersion": "2017-12-01-preview",
-            "name": "[concat(parameters('servers_    netunivsqldb1111_name'), '/allAzureIPs')]",
+            "name": "[concat(parameters('servers_netunivsqldbdemo_name'), '/allAzureIPs')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_    netunivsqldb1111_name'))]"
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_netunivsqldbdemo_name'))]"
             ],
             "properties": {
                 "startIpAddress": "0.0.0.0",
@@ -1913,27 +1911,27 @@
         {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2016-08-01",
-            "name": "[parameters('sites_netunivdocker111_name')]",
+            "name": "[parameters('sites_netunivdockerdemo_name')]",
             "location": "East US",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_wpdocker_name'))]"
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_wpdockerdemo_name'))]"
             ],
             "kind": "app,linux,container",
             "properties": {
                 "enabled": true,
                 "hostNameSslStates": [
                     {
-                        "name": "[concat(parameters('sites_netunivdocker111_name'), '.azurewebsites.net')]",
+                        "name": "[concat(parameters('sites_netunivdockerdemo_name'), '.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "hostType": "Standard"
                     },
                     {
-                        "name": "[concat(parameters('sites_netunivdocker111_name'), '.scm.azurewebsites.net')]",
+                        "name": "[concat(parameters('sites_netunivdockerdemo_name'), '.scm.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "hostType": "Repository"
                     }
                 ],
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_wpdocker_name'))]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_wpdockerdemo_name'))]",
                 "reserved": true,
                 "scmSiteAlsoStopped": false,
                 "clientAffinityEnabled": true,
@@ -1947,10 +1945,10 @@
         {
             "type": "Microsoft.Web/sites/config",
             "apiVersion": "2016-08-01",
-            "name": "[concat(parameters('sites_netunivdocker111_name'), '/web')]",
+            "name": "[concat(parameters('sites_netunivdockerdemo_name'), '/web')]",
             "location": "East US",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_netunivdocker111_name'))]"
+                "[resourceId('Microsoft.Web/sites', parameters('sites_netunivdockerdemo_name'))]"
             ],
             "properties": {
                 "numberOfWorkers": 1,
@@ -1976,7 +1974,7 @@
                 "httpLoggingEnabled": false,
                 "logsDirectorySizeLimit": 35,
                 "detailedErrorLoggingEnabled": false,
-                "publishingUsername": "$netunivdocker111",
+                "publishingUsername": "$netunivdockerdemo",
                 "scmType": "None",
                 "use32BitWorkerProcess": true,
                 "webSocketsEnabled": false,
@@ -2038,13 +2036,13 @@
         {
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2016-08-01",
-            "name": "[concat(parameters('sites_netunivdocker111_name'), '/', parameters('sites_netunivdocker111_name'), '.azurewebsites.net')]",
+            "name": "[concat(parameters('sites_netunivdockerdemo_name'), '/', parameters('sites_netunivdockerdemo_name'), '.azurewebsites.net')]",
             "location": "East US",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_netunivdocker111_name'))]"
+                "[resourceId('Microsoft.Web/sites', parameters('sites_netunivdockerdemo_name'))]"
             ],
             "properties": {
-                "siteName": "netunivdocker111",
+                "siteName": "netunivdockerdemo",
                 "hostNameType": "Verified"
             }
         }
