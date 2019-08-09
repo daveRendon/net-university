@@ -1,7 +1,7 @@
 ## Preparación del Laboratorio
 
 
-El template "windowsMultitier.js" provisiona la arquitectura de una aplicación web de front-end que se conecta a una base de datos back-end, ambas ejecutándose en Windows Server 2016.
+El template "multitierWindows.js" provisiona la arquitectura de una aplicación web de front-end que se conecta a una base de datos back-end, ambas ejecutándose en Windows Server 2016.
 
 ![Arquitectura](https://github.com/daveRendon/net-university/blob/master/monitoreo-servidores-y-aplicaciones/Labs/Monitoreo-servidores/architecture-multitier-app.png)
 
